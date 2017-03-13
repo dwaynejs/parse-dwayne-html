@@ -1,0 +1,8 @@
+.idea/
+node_modules/
+
+.babelrc
+.editorconfig
+
+bundle.js
+bundle.js.map
