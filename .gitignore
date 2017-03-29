@@ -3,5 +3,5 @@
 node_modules/
 .idea/
 
-bindle.js
-bindle.js.map
+bundle.js
+bundle.js.map
