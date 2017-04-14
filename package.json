@@ -1,6 +1,6 @@
 {
   "name": "parse-dwayne-html",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "main": "lib/index.js",
   "dependencies": {
     "babel-generator": "^6.23.0",
