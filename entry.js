@@ -1,6 +1,21 @@
+var fs = require('fs');
+var path = require('path');
 var parse = require('./lib');
+var html = fs.readFileSync(path.resolve('./fixture.html'));
 
-var expression = '<div>{a + b}123&dagger;Привет!&nbsp;{a + c}</div>';
-var parsed = parse(expression);
+var parsed = parse(html);
 
-console.log(parsed);
+console.log(parsed.html);
+console.log();
+console.log(parsed.additionalJs);
+
+var eventualCode = parsed.additionalJs
+  + '\n\nvar '
+  + parsed.funcName
+  + ', '
+  + parsed.tmplVar
+  + ';\n\nexport default '
+  + parsed.html
+  + ';';
+
+fs.writeFileSync(path.resolve('./output.js'), eventualCode);

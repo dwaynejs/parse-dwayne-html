@@ -1,12 +1,8 @@
 .idea/
 node_modules/
 
-.babelrc
 .editorconfig
 
-bundle.js
-bundle.js.map
-
-index.html
+fixture.html
 entry.js
-webpack.config.js
+output.js
