@@ -1,15 +1,12 @@
 {
   "name": "parse-dwayne-html",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "main": "lib/index.js",
   "dependencies": {
-    "babel-generator": "^6.23.0",
-    "babel-traverse": "^6.23.1",
-    "babel-types": "^6.23.0",
-    "babylon": "^6.16.1",
     "html-entities": "^1.2.0",
     "htmlparser2": "^3.9.2",
     "lodash": "^4.17.4",
+    "parse-dwayne-js": "^4.0.0",
     "serialize-javascript": "^1.3.0"
   }
 }

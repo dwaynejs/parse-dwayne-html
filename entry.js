@@ -3,11 +3,9 @@ var path = require('path');
 var parse = require('./lib');
 var html = fs.readFileSync(path.resolve('./fixture.html'));
 
-var parsed = parse(html);
-
-console.log(parsed.html);
-console.log();
-console.log(parsed.additionalJs);
+var parsed = parse(html, {
+  keepOriginal: false
+});
 
 var eventualCode = parsed.additionalJs
   + '\n\nvar '

@@ -1,9 +1,11 @@
 <script>
-  import Dwayne, { default as D } from 'dwayne';
+  import { If, On, Style, Class } from 'dwayne';
+  import SomeBlock from '../some-block';
 </script>
-<div D.On(click)="{does()}">
+<div On(click)="{this.does()}">
   {a + b}
-  <Dwayne.If if="{a}">
+  <If if="{this.c}">
     <span/>
-  </Dwayne.If>
+  </If>
+  <SomeBlock Style="{{ marginTop: '1px' }}" Class="{cls}"/>
 </div>
