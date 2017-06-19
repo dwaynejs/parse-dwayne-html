@@ -73,9 +73,9 @@ transformDwayneHtml(code: string, options?: {
 }
 ```
 
-There are two types of options: ones that are used by the loader,
-plugin and noy by the end Dwayne user and ones that are usually passed
-through it.
+There are two types of options: ones that are used by loaders,
+plugins and etc (not by the end Dwayne user) and ones that are usually
+passed through.
 
 Plugins options:
 
