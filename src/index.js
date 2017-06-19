@@ -63,6 +63,8 @@ module.exports = (source, options) => {
   const code = new CodeGenerator(options);
   const tmplCode = new CodeGenerator(options);
 
+  tmplCode.generatedMixin = false;
+
   if (parsed.length) {
     generateJson(
       parsed,
