@@ -1,6 +1,6 @@
 {
   "name": "transform-dwayne-html",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "main": "lib/index.js",
   "typings": "index.d.ts",
   "dependencies": {
@@ -11,7 +11,7 @@
     "lines-and-columns": "^1.1.6",
     "lodash": "^4.17.4",
     "source-map": "^0.5.6",
-    "transform-dwayne-js-expressions": "^5.2.2"
+    "transform-dwayne-js-expressions": "^5.4.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

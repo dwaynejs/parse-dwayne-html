@@ -64,7 +64,9 @@ transformDwayneHtml(code: string, options?: {
   startColumn?: number = 0,
   filename?: string = 'unknown',
   tmplVarName?: string = '_tmpl',
-  mixinVarName?: string = '_mixin'
+  mixinVarName?: string = '_mixin',
+  thisVarName?: string,
+  keepScope?: boolean
 }): {
   code: string,
   map: SourceMap | null,
@@ -97,6 +99,8 @@ id when it's the case (it also probably shouldn't match any of
 `options.unscopables` vars).
 * `options.mixinVarName` (default: `_mixin`): the same as the previous
 one, but it's used for referencing a mixin function.
+* `options.thisVarName`: see [transform-dwayne-js-expressions](https://github.com/dwaynejs/transform-dwayne-js-expressions).
+* `options.keepScope`: see [transform-dwayne-js-expressions](https://github.com/dwaynejs/transform-dwayne-js-expressions).
 
 Dwayne user options:
 
@@ -136,10 +140,12 @@ Returns an object with following properties:
 
 * `code`: the output js code.
 * `map`: the output sourcemap.
-* `generatedTmplVar`: whether `options.tmplVar` was used in the code
-or not. (useful for embedded code)
-* `generatedMixinVar`: whether `options.mixinVar` was used in the code
-or not. (useful for embedded code)
+* `generatedTmplVar`: whether `options.tmplVarName` was used in the
+codeor not. (useful for embedded code)
+* `generatedMixinVar`: whether `options.mixinVarName` was used in the
+code or not. (useful for embedded code)
+* `generatedThisVar`: whether `options.thisVarName` was used in the
+code or not. (see [transform-dwayne-js-expressions](https://github.com/dwaynejs/transform-dwayne-js-expressions))
 
 ### Examples
 

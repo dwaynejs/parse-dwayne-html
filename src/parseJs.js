@@ -54,6 +54,7 @@ exports.maybeParseJs = (code, position, options) => {
 
       return {
         vars: parsed.vars,
+        generatedThisVar: parsed.generatedThisVar,
         code: parsed.code,
         map: parsed.map,
         original: newCode,

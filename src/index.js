@@ -36,6 +36,7 @@ module.exports = (source, options) => {
   options.varsVarName = generateVar('_', options);
   options.tmplVarName = _.get(options, 'tmplVarName', generateVar('_tmpl', options));
   options.mixinVarName = _.get(options, 'mixinVarName', generateVar('_mixin', options));
+  options.generatedThisVar = false;
 
   if (SOURCE_TYPES.indexOf(options.sourceType) === -1) {
     throw new Error('options.sourceType has to be one either "module" or "embed"!');
@@ -62,8 +63,6 @@ module.exports = (source, options) => {
 
   const code = new CodeGenerator(options);
   const tmplCode = new CodeGenerator(options);
-
-  tmplCode.generatedMixin = false;
 
   if (parsed.length) {
     generateJson(
@@ -159,6 +158,7 @@ module.exports = (source, options) => {
     code: code.toString(),
     map: code.generateMap(),
     generatedTmplVar: !!vars.length,
-    generatedMixinVar: tmplCode.generatedMixin
+    generatedMixinVar: !!tmplCode.generatedMixin,
+    generatedThisVar: options.generatedThisVar,
   };
 };

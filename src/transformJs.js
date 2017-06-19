@@ -68,6 +68,7 @@ module.exports = function transformJs(DOM, usedLocals, exclude, options) {
 
           _.assign(usedLocals, usedVariables);
 
+          options.generatedThisVar = options.generatedThisVar || parsed.generatedThisVar;
           eventualValue = constructEvalFunction(parsed.code, parsed.map);
 
           if (mixinMatch) {
@@ -138,6 +139,7 @@ module.exports = function transformJs(DOM, usedLocals, exclude, options) {
       const usedVariables = {};
       const newValue = constructEvalFunction(parsed.code, parsed.map);
 
+      options.generatedThisVar = options.generatedThisVar || parsed.generatedThisVar;
       newValue.location = location;
 
       _.forEach(parsed.vars, (variable) => {

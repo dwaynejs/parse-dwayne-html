@@ -15,6 +15,8 @@ export interface Options {
   filename?: string;
   tmplVarName?: string;
   mixinVarName?: string;
+  thisVarName?: string;
+  keepScope?: boolean;
 }
 
 export interface SourceMap {
@@ -32,4 +34,5 @@ export = function (code: string, options?: Options): {
   map: SourceMap | null,
   generatedTmplVar: boolean,
   generatedMixinVar: boolean,
+  generatedThisVar: boolean
 };
