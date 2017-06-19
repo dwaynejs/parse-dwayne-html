@@ -3,4 +3,6 @@
 node_modules/
 .idea/
 
-output.js
+.nyc_output/
+coverage/
+lib/

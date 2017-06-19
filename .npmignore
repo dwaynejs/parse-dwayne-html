@@ -1,8 +1,10 @@
 .idea/
 node_modules/
 
-.editorconfig
+.nyc_output/
+coverage/
+src/
+test/
 
-fixture.html
-entry.js
-output.js
+.babelrc
+.editorconfig

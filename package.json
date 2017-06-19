@@ -1,12 +1,48 @@
 {
-  "name": "parse-dwayne-html",
-  "version": "4.1.2",
+  "name": "transform-dwayne-html",
+  "version": "5.0.0",
   "main": "lib/index.js",
+  "typings": "index.d.ts",
   "dependencies": {
-    "html-entities": "^1.2.0",
-    "htmlparser2": "^3.9.2",
+    "babel-core": "^6.25.0",
+    "babylon": "^6.17.4",
+    "entities": "^1.1.1",
+    "generate-code": "^2.2.2",
+    "lines-and-columns": "^1.1.6",
     "lodash": "^4.17.4",
-    "parse-dwayne-js": "^4.0.0",
-    "serialize-javascript": "^1.3.0"
+    "source-map": "^0.5.6",
+    "transform-dwayne-js-expressions": "^5.2.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "mocha": "^3.4.2",
+    "nyc": "^11.0.2",
+    "sourcemap-codec": "^1.3.1"
+  },
+  "scripts": {
+    "build": "babel src --out-dir lib",
+    "test": "nyc mocha test/index.js --reporter dot",
+    "prepublish": "npm test && npm run build"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100,
+    "sourceMap": true,
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "test/**/*.js",
+      "node_modules/**/*"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "cache": true,
+    "all": true
   }
 }
