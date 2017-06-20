@@ -7,7 +7,7 @@ module.exports = [
       {
         type: Block,
         args: {
-          Class: (_mixin = function (_) {
+          Class: (_mixin = function () {
             return "cls";
           }, _mixin.mixin = Class, _mixin),
           __source: {

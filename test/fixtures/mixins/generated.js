@@ -13,7 +13,7 @@ module.exports = (_tmpl = [
           Class: (_mixin = function (_) {
             return _.cls;
           }, _mixin.mixin = Class, _mixin),
-          "BoolMixin()": (_mixin = function (_) {
+          "BoolMixin()": (_mixin = function () {
             return true;
           }, _mixin.mixin = BoolMixin, _mixin.args = [], _mixin),
           __source: {
