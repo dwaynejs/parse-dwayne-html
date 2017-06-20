@@ -94,7 +94,7 @@ doesn't shift the output code or its map. (1-indexed)
 into javascript. Used when `options.addSource` is `true`. Note that it
 doesn't shift the output code or its map.
 * `options.filename` (default: `'unknown'`): used for sourcemaps and
-source args (see `options.addSource`).
+`__source` args (see `options.addSource`).
 * `options.tmplVarName` (default: `_tmpl`): used for referencing
 the template var. If the html is embedded into javascript it's
 important not to violate the outer scope, so you should pass a unique
@@ -133,8 +133,8 @@ Used only when `options.sourceType` is `module`. If it is `es`, the
 output will be exported like `export default ...;` and if `cjs`, it
 will be `module.exports = ...;`.
 * `options.addSource` (default: `true`): means that every block
-gets `__source` arg which is used (see the examples below). The
-`__source` arg will be used later by Dwayne.
+gets `__source` arg, which will be used later by Dwayne for debugging
+purposes (see the examples below).
 * `options.sourceMap` (default: `true`): whether the sourcemap should
 be generated (also passed to
 [transform-dwayne-js-expressions](https://github.com/dwaynejs/transform-dwayne-js-expressions)).
