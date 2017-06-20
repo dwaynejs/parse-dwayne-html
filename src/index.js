@@ -27,6 +27,7 @@ module.exports = (source, options) => {
   options.exportType = _.get(options, 'exportType', 'cjs');
   options.addSource = !!_.get(options, 'addSource', true);
   options.sourceMap = !!_.get(options, 'sourceMap', true);
+  options.inputSourceMap = _.get(options, 'inputSourceMap', null);
   options.startLine = _.get(options, 'startLine', 1);
   options.startColumn = _.get(options, 'startColumn', 0);
   options.filename = _.get(options, 'filename', 'unknown');
@@ -61,8 +62,10 @@ module.exports = (source, options) => {
   const vars = _.keys(usedLocals);
   const additionalJs = extractFirstScript(parsed, options);
 
-  const code = new CodeGenerator(options);
-  const tmplCode = new CodeGenerator(options);
+  const code = new CodeGenerator(_.assign(pickOptions(options), {
+    inputSourceMap: options.inputSourceMap
+  }));
+  const tmplCode = new CodeGenerator(pickOptions(options));
 
   if (parsed.length) {
     generateJson(
@@ -162,3 +165,11 @@ module.exports = (source, options) => {
     generatedThisVar: options.generatedThisVar,
   };
 };
+
+function pickOptions(options) {
+  return _.pick(options, [
+    'filename',
+    'sourceContent',
+    'sourceMap'
+  ]);
+}

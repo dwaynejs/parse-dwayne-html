@@ -60,6 +60,7 @@ transformDwayneHtml(code: string, options?: {
   toFunction?: boolean = false,
   addSource?: boolean = true,
   sourceMap?: boolean = true,
+  inputSourceMap?: SourceMap | null,
   startLine?: number = 1,
   startColumn?: number = 0,
   filename?: string = 'unknown',
@@ -84,6 +85,7 @@ Plugins options:
 * `options.sourceType` (default: `'module'`): one of
 `['module', 'embed']`. `module` means that the output should be a
 module, and `embed` means that the output should be a plain template.
+* `options.inputSourceMap` (default: `null`): input sourcemap.
 * `options.startLine` (default: `1`): useful when the html is embedded
 into javascript. Used when `options.addSource` is `true`. Note that it
 doesn't shift the output code or its map. (1-indexed)

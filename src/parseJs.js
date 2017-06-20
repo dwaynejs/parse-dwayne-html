@@ -1,9 +1,10 @@
+const _ = require('lodash');
 const { parseExpression } = require('babylon');
 const transformDwayneJs = require('transform-dwayne-js-expressions');
 
 exports.parseJs = (code, position, options) => {
   try {
-    return transformDwayneJs(code, options);
+    return transformDwayneJs(code, pickOptions(options));
   } catch (err) {
     /* istanbul ignore if */
     if (typeof err.pos !== 'number') {
@@ -50,7 +51,7 @@ exports.maybeParseJs = (code, position, options) => {
     const newCode = code.slice(0, pos);
 
     try {
-      const parsed = transformDwayneJs(newCode, options);
+      const parsed = transformDwayneJs(newCode, pickOptions(options));
 
       return {
         vars: parsed.vars,
@@ -84,4 +85,14 @@ function throwError(err, position, options) {
   ));
 
   throw err;
+}
+
+function pickOptions(options) {
+  return _.pick(options, [
+    'unscopables',
+    'filename',
+    'sourceMap',
+    'keepScope',
+    'thisVarName'
+  ]);
 }

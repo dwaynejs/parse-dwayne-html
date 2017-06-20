@@ -10,6 +10,7 @@ export interface Options {
   exportType?: 'es' | 'cjs';
   addSource?: boolean;
   sourceMap?: boolean;
+  inputSourceMap?: SourceMap | null;
   startLine?: number;
   startColumn?: number;
   filename?: string;
