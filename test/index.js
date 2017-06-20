@@ -142,13 +142,13 @@ describe('transform', () => {
   it('should throw an error with wrong options.sourceType', () => {
     throws(() => {
       transformDwayneHtml('', { sourceType: 'unknown' });
-    }, /options\.sourceType has to be one either "module" or "embed"!/);
+    }, /options\.sourceType has to be either "module" or "embed"!/);
   });
 
   it('should throw an error with wrong options.exportType', () => {
     throws(() => {
       transformDwayneHtml('', { exportType: 'unknown' });
-    }, /options\.exportType has to be one either "es" or "cjs"!/);
+    }, /options\.exportType has to be either "es" or "cjs"!/);
   });
 
   it('should throw an error with wrong options.unscopables', () => {
@@ -159,6 +159,16 @@ describe('transform', () => {
     throws(() => {
       transformDwayneHtml('', { unscopables: ['string', 1] });
     }, /options\.unscopables has to be an array of strings!/);
+  });
+
+  it('should throw an error with wrong options.indent', () => {
+    throws(() => {
+      transformDwayneHtml('', { indent: null });
+    }, /options\.indent has to be either a string or a number!/);
+
+    throws(() => {
+      transformDwayneHtml('', { indent: 'string' });
+    }, /options\.indent has to be whitespace!/);
   });
 });
 

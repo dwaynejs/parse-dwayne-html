@@ -2,9 +2,7 @@ const _ = require('lodash');
 const { default: LinesAndColumns } = require('lines-and-columns');
 const { decode, encode } = require('sourcemap-codec');
 
-const INDENT = '  ';
-
-module.exports = (code, map, indent) => {
+module.exports = (code, map, indent, options) => {
   if (!map || !indent) {
     return {
       code,
@@ -12,7 +10,7 @@ module.exports = (code, map, indent) => {
     };
   }
 
-  indent = INDENT.repeat(indent);
+  indent = options.indent.repeat(indent);
 
   const lines = new LinesAndColumns(code);
   const mappings = decode(map.mappings);

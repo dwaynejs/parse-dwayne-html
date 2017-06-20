@@ -1,12 +1,14 @@
 const _ = require('lodash');
 
-const INDENT = '  ';
 const PURE_PROP_REGEX = /^[A-Za-z_$][A-Za-z\d_$]*$/;
 
 const setJsIndents = require('./setJsIndents');
 
 module.exports = function generateJson(json, code, indent, options) {
-  const { mixinVarName } = options;
+  const {
+    mixinVarName,
+    indent: INDENT
+  } = options;
 
   code.add('[');
 
@@ -107,7 +109,7 @@ ${ INDENT.repeat(indent + 3) }}`
             );
           }
 
-          const withIndents = setJsIndents(value.toString(), value.map, indent + 3);
+          const withIndents = setJsIndents(value.toString(), value.map, indent + 3, options);
 
           code.addWithMap(withIndents.code, withIndents.map, value.location);
 
@@ -163,7 +165,8 @@ ${ INDENT.repeat(indent + 2) }}`
       const withIndents = setJsIndents(
         typeof value === 'string' ? JSON.stringify(value) : value.toString(),
         value.map,
-        indent + 2
+        indent + 2,
+        options
       );
 
       code

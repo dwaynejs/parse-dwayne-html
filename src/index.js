@@ -31,6 +31,7 @@ module.exports = (source, options) => {
   options.startLine = _.get(options, 'startLine', 1);
   options.startColumn = _.get(options, 'startColumn', 0);
   options.filename = _.get(options, 'filename', 'unknown');
+  options.indent = _.get(options, 'indent', 2);
 
   options.sourceContent = source;
   options.lines = new LinesAndColumns(source);
@@ -39,12 +40,24 @@ module.exports = (source, options) => {
   options.mixinVarName = _.get(options, 'mixinVarName', generateVar('_mixin', options));
   options.generatedThisVar = false;
 
+  if (typeof options.indent === 'number') {
+    options.indent = ' '.repeat(options.indent);
+  }
+
+  if (typeof options.indent !== 'string') {
+    throw new Error('options.indent has to be either a string or a number!');
+  }
+
+  if (!/^\s+$/.test(options.indent)) {
+    throw new Error('options.indent has to be whitespace!');
+  }
+
   if (SOURCE_TYPES.indexOf(options.sourceType) === -1) {
-    throw new Error('options.sourceType has to be one either "module" or "embed"!');
+    throw new Error('options.sourceType has to be either "module" or "embed"!');
   }
 
   if (EXPORT_TYPES.indexOf(options.exportType) === -1) {
-    throw new Error('options.exportType has to be one either "es" or "cjs"!');
+    throw new Error('options.exportType has to be either "es" or "cjs"!');
   }
 
   if (!_.isArray(options.unscopables) || !options.unscopables.every(_.isString)) {

@@ -64,6 +64,7 @@ transformDwayneHtml(code: string, options?: {
   startLine?: number = 1,
   startColumn?: number = 0,
   filename?: string = 'unknown',
+  indent?: string | number = 2,
   tmplVarName?: string = '_tmpl',
   mixinVarName?: string = '_mixin',
   thisVarName?: string,
@@ -137,6 +138,8 @@ gets `__source` arg which is used (see the examples below). The
 * `options.sourceMap` (default: `true`): whether the sourcemap should
 be generated (also passed to
 [transform-dwayne-js-expressions](https://github.com/dwaynejs/transform-dwayne-js-expressions)).
+* `options.indent` (default: `2`): output indent string. Number means
+that many spaces.
 
 Returns an object with following properties:
 
