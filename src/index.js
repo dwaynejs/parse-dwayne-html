@@ -32,6 +32,7 @@ module.exports = (source, options) => {
   options.startColumn = _.get(options, 'startColumn', 0);
   options.filename = _.get(options, 'filename', 'unknown');
   options.indent = _.get(options, 'indent', 2);
+  options.useES6 = !!_.get(options, 'useES6', false);
 
   options.sourceContent = source;
   options.lines = new LinesAndColumns(source);
@@ -84,7 +85,7 @@ module.exports = (source, options) => {
     generateJson(
       parsed,
       tmplCode,
-      options.toFunction
+      options.toFunction && !options.useES6
         ? 1
         : 0,
       options
@@ -110,7 +111,11 @@ module.exports = (source, options) => {
 
   if (options.sourceType === 'module') {
     if (vars.length || tmplCode.generatedMixin) {
-      code.add('var ');
+      code.add(
+        options.useES6
+          ? 'let '
+          : 'var '
+      );
 
       if (vars.length) {
         code.add(options.tmplVarName);
@@ -133,8 +138,16 @@ module.exports = (source, options) => {
   }
 
   if (options.toFunction) {
+    const varName = tmplCode.generatedVarsName
+      ? options.varsVarName
+      : '';
+
     code.add(
-      `function (${ options.varsVarName }) {
+      options.useES6
+        ? varName
+          ? `${ varName } => `
+          : `() => `
+        : `function (${ varName }) {
   return `
     );
   }
@@ -159,7 +172,7 @@ module.exports = (source, options) => {
     );
   }
 
-  if (options.toFunction) {
+  if (options.toFunction && !options.useES6) {
     code.add(
       `;
 }`

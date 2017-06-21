@@ -47,9 +47,8 @@ ${ INDENT.repeat(indent + 2)
     if (typeof type === 'string') {
       code.add(JSON.stringify(type));
     } else {
-      let index = 0;
-
       if (options.toFunction) {
+        code.generatedVarsName = true;
         code.addWithMapping(
           options.varsVarName + '.',
           options.lines.locationForIndex(type.start)
@@ -62,11 +61,9 @@ ${ INDENT.repeat(indent + 2)
         } else {
           code.addWithMapping(
             name,
-            options.lines.locationForIndex(type.start + index),
+            options.lines.locationForIndex(type.start),
             name
           );
-
-          index += name.length + 1;
         }
       });
     }
@@ -118,9 +115,8 @@ ${ INDENT.repeat(indent + 3) }}`
               `, ${ mixinVarName }.mixin = `
             );
 
-            let index = 0;
-
             if (options.toFunction) {
+              code.generatedVarsName = true;
               code.addWithMapping(
                 options.varsVarName + '.',
                 options.lines.locationForIndex(value.nameStart)
@@ -133,18 +129,14 @@ ${ INDENT.repeat(indent + 3) }}`
               } else {
                 code.addWithMapping(
                   name,
-                  options.lines.locationForIndex(value.nameStart + index),
+                  options.lines.locationForIndex(value.nameStart),
                   name
                 );
-
-                index += name.length + 1;
               }
             });
 
             code.add(
-              `, ${ value.args ? `${
-                mixinVarName }.args = ${ JSON.stringify(value.args).replace(/,/g, ', ') }, ` : '' }${
-                mixinVarName})`
+              `, ${ mixinVarName })`
             );
           }
         }

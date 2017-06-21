@@ -140,6 +140,11 @@ be generated (also passed to
 [transform-dwayne-js-expressions](https://github.com/dwaynejs/transform-dwayne-js-expressions)).
 * `options.indent` (default: `2`): output indent string. Number means
 that many spaces.
+* `options.useES6` (default: `false`): whether ES6 should be used in
+the output rather than ES5: `let` instead of `var`, arrow functions
+instead of usual functions. It's recommended setting this option to
+`true` and leave transformations to babel. Also passed to
+[transform-dwayne-js-expressions](https://github.com/dwaynejs/transform-dwayne-js-expressions).
 
 Returns an object with following properties:
 

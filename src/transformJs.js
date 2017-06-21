@@ -5,7 +5,7 @@ const constructEvalFunction = require('./constructEvalFunction');
 const { parseJs, maybeParseJs } = require('./parseJs');
 
 const BLOCK_REGEX = /^(?:[A-Z][A-Za-z\d_$]*(?:\.[A-Za-z_$][A-Za-z\d_$]*)*|[A-Za-z_$][A-Za-z\d_$]*\.[A-Za-z_$][A-Za-z\d_$]*(?:\.[A-Za-z_$][A-Za-z\d_$]*)*)$/;
-const MIXIN_REGEX = /^((?:[A-Z][A-Za-z\d_$]*(?:\.[A-Za-z_$][A-Za-z\d_$]*)*|[A-Za-z_$][A-Za-z\d_$]*\.[A-Za-z_$][A-Za-z\d_$]*(?:\.[A-Za-z_$][A-Za-z\d_$]*)*))(?:\(([^)]*)\))?$/;
+const MIXIN_REGEX = /^((?:[A-Z][A-Za-z\d_$]*(?:\.[A-Za-z_$][A-Za-z\d_$]*)*|[A-Za-z_$][A-Za-z\d_$]*\.[A-Za-z_$][A-Za-z\d_$]*(?:\.[A-Za-z_$][A-Za-z\d_$]*)*))(?::.*)?$/;
 
 module.exports = function transformJs(DOM, usedLocals, exclude, options) {
   const newDOM = [];
@@ -73,11 +73,6 @@ module.exports = function transformJs(DOM, usedLocals, exclude, options) {
 
           if (mixinMatch) {
             eventualValue.mixin = mixinMatch[1];
-            eventualValue.args = _.isUndefined(mixinMatch[2])
-              ? null
-              : mixinMatch[2]
-                ? mixinMatch[2].split(',')
-                : [];
           }
 
           eventualValue.nameStart = attrsNamesLocations[arg];

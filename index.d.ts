@@ -15,6 +15,7 @@ export interface Options {
   startColumn?: number;
   filename?: string;
   indent?: string | number;
+  useES6?: boolean;
   tmplVarName?: string;
   mixinVarName?: string;
   thisVarName?: string;

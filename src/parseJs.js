@@ -93,6 +93,7 @@ function pickOptions(options) {
     'filename',
     'sourceMap',
     'keepScope',
-    'thisVarName'
+    'thisVarName',
+    'useES6'
   ]);
 }
