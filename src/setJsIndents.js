@@ -3,14 +3,15 @@ const { default: LinesAndColumns } = require('lines-and-columns');
 const { decode, encode } = require('sourcemap-codec');
 
 module.exports = (code, map, indent, options) => {
+  indent = options.indent.repeat(indent);
+  code = code.replace(/\r\n|\r|\n/g, '$&' + indent);
+
   if (!map || !indent) {
     return {
       code,
       map
     };
   }
-
-  indent = options.indent.repeat(indent);
 
   const lines = new LinesAndColumns(code);
   const mappings = decode(map.mappings);
@@ -25,7 +26,6 @@ module.exports = (code, map, indent, options) => {
     });
   }
 
-  code = code.replace(/\r\n|\r|\n/g, '$&' + indent);
   map.mappings = encode(mappings);
 
   return {
