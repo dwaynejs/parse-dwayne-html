@@ -170,6 +170,12 @@ describe('transform', () => {
       transformDwayneHtml('', { indent: 'string' });
     }, /options\.indent has to be whitespace!/);
   });
+
+  it('should throw an error with wrong options.quotes', () => {
+    throws(() => {
+      transformDwayneHtml('', { quotes: 'triple' });
+    }, /options\.quotes has to be either "single" or "double"!/);
+  });
 });
 
 function compareMaps(probableMap, realMap, code) {

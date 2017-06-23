@@ -1,4 +1,4 @@
-module.exports = (tree, options) => {
+module.exports = (tree) => {
   if (!tree.length || tree[0].type !== 'script') {
     return;
   }
@@ -13,6 +13,6 @@ module.exports = (tree, options) => {
 
   return {
     code: text.value,
-    loc: options.lines.locationForIndex(text.start)
+    loc: text.start
   };
 };

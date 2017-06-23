@@ -9,9 +9,11 @@ const generateJson = require('./generateJson');
 const extractFirstScript = require('./extractFirstScript');
 const generateVar = require('./generateVar');
 const traverseDom = require('./traverseDom');
+const stringifyString = require('./stringifyString');
 
 const SOURCE_TYPES = ['module', 'embed'];
 const EXPORT_TYPES = ['es', 'cjs'];
+const QUOTE_TYPES = ['single', 'double'];
 
 module.exports = (source, options) => {
   options = _.assign({}, options);
@@ -33,6 +35,7 @@ module.exports = (source, options) => {
   options.filename = _.get(options, 'filename', 'unknown');
   options.indent = _.get(options, 'indent', 2);
   options.useES6 = !!_.get(options, 'useES6', false);
+  options.quotes = _.get(options, 'quotes', 'double');
 
   options.sourceContent = source;
   options.lines = new LinesAndColumns(source);
@@ -61,6 +64,10 @@ module.exports = (source, options) => {
     throw new Error('options.exportType has to be either "es" or "cjs"!');
   }
 
+  if (QUOTE_TYPES.indexOf(options.quotes) === -1) {
+    throw new Error('options.quotes has to be either "single" or "double"!');
+  }
+
   if (!_.isArray(options.unscopables) || !options.unscopables.every(_.isString)) {
     throw new Error('options.unscopables has to be an array of strings!');
   }
@@ -74,7 +81,7 @@ module.exports = (source, options) => {
     options
   );
   const vars = _.keys(usedLocals);
-  const additionalJs = extractFirstScript(parsed, options);
+  const additionalJs = extractFirstScript(parsed);
 
   const code = new CodeGenerator(_.assign(pickOptions(options), {
     inputSourceMap: options.inputSourceMap
@@ -167,7 +174,7 @@ module.exports = (source, options) => {
   if (vars.length) {
     code.add(
       `, ${
-        options.tmplVarName }.vars = ${ JSON.stringify(vars).replace(/,/g, ', ') }, ${
+        options.tmplVarName }.vars = [${ vars.map((varName) => stringifyString(varName, options)).join(', ') }], ${
         options.tmplVarName })`
     );
   }

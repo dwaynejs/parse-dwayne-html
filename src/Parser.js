@@ -187,8 +187,16 @@ class Parser {
       this.currentNode.attrsValuesLocations[name] = this.index + name.length + attrMatch[2].length + /^['|"]/.test(attrMatch[3]);
     }
 
-    this.currentNode.attrs[name] = value;
-    this.currentNode.attrsNamesLocations[name] = this.index;
+    const attr = this.currentNode.attrs[name] = {
+      nameStart: this.index,
+      valueStart: null,
+      value
+    };
+
+    if (attrMatch[2]) {
+      attr.valueStart = this.index + name.length + attrMatch[2].length + /^['|"]/.test(attrMatch[3]);
+    }
+
     this.index += attrMatch[0].length;
     this.state = STATES.INSIDE_OPEN_TAG;
   }

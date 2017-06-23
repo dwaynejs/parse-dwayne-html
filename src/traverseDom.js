@@ -4,7 +4,6 @@ module.exports = function traverseDom(dom) {
   return _.forEach(dom, (node) => {
     node.args = node.attrs;
 
-    delete node.parent;
     delete node.attrs;
 
     if (node.children && !node.children.length) {

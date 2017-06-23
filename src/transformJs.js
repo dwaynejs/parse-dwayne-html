@@ -3,6 +3,7 @@ const entities = require('entities');
 
 const constructEvalFunction = require('./constructEvalFunction');
 const { parseJs, maybeParseJs } = require('./parseJs');
+const stringifyString = require('./stringifyString');
 
 const BLOCK_REGEX = /^(?:[A-Z][A-Za-z\d_$]*(?:\.[A-Za-z_$][A-Za-z\d_$]*)*|[A-Za-z_$][A-Za-z\d_$]*\.[A-Za-z_$][A-Za-z\d_$]*(?:\.[A-Za-z_$][A-Za-z\d_$]*)*)$/;
 const MIXIN_REGEX = /^((?:[A-Z][A-Za-z\d_$]*(?:\.[A-Za-z_$][A-Za-z\d_$]*)*|[A-Za-z_$][A-Za-z\d_$]*\.[A-Za-z_$][A-Za-z\d_$]*(?:\.[A-Za-z_$][A-Za-z\d_$]*)*))(?::.*)?$/;
@@ -14,8 +15,6 @@ module.exports = function transformJs(DOM, usedLocals, exclude, options) {
     let {
       type,
       args,
-      attrsNamesLocations,
-      attrsValuesLocations,
       children,
       start,
       value
@@ -24,8 +23,8 @@ module.exports = function transformJs(DOM, usedLocals, exclude, options) {
     const blockMatch = type.match(BLOCK_REGEX);
 
     if (type === 'Each' || type === 'Dwayne.Each') {
-      excludeLocal[_.get(args, 'item', '$item')] = true;
-      excludeLocal[_.get(args, 'index', '$index')] = true;
+      excludeLocal[_.get(args, 'item', { value: '$item' }).value] = true;
+      excludeLocal[_.get(args, 'index', { value: '$index' }).value] = true;
     }
 
     if (blockMatch) {
@@ -34,15 +33,20 @@ module.exports = function transformJs(DOM, usedLocals, exclude, options) {
     }
 
     if (args) {
-      node.args = _.mapValues(args, (value, arg) => {
+      node.args = _.mapValues(args, (argValue, arg) => {
         const mixinMatch = arg.match(MIXIN_REGEX);
+        let {
+          nameStart,
+          valueStart,
+          value
+        } = argValue;
         let eventualValue;
 
         if (mixinMatch) {
           value = value === true
             ? '{true}'
             : value[0] !== '{' || value[value.length - 1] !== '}'
-              ? '{' + JSON.stringify(entities.decodeHTML(value)) + '}'
+              ? '{' + stringifyString(entities.decodeHTML(value), options) + '}'
               : value;
         }
 
@@ -51,10 +55,9 @@ module.exports = function transformJs(DOM, usedLocals, exclude, options) {
         } else if (value[0] !== '{' || value[value.length - 1] !== '}') {
           eventualValue = entities.decodeHTML(value);
         } else {
-          const index = attrsValuesLocations[arg]
-            ? attrsValuesLocations[arg] + 1
-            : attrsNamesLocations[arg];
-          const location = options.lines.locationForIndex(index);
+          const index = valueStart === null
+            ? nameStart
+            : valueStart + 1;
           const parsed = parseJs(value.slice(1, -1), index, options);
           const usedVariables = {};
 
@@ -75,8 +78,8 @@ module.exports = function transformJs(DOM, usedLocals, exclude, options) {
             eventualValue.mixin = mixinMatch[1];
           }
 
-          eventualValue.nameStart = attrsNamesLocations[arg];
-          eventualValue.location = location;
+          eventualValue.nameStart = nameStart;
+          eventualValue.location = index;
         }
 
         return eventualValue;
@@ -129,13 +132,12 @@ module.exports = function transformJs(DOM, usedLocals, exclude, options) {
         value = value.slice(index);
       }
 
-      const location = options.lines.locationForIndex(start + curIndex + 1);
       const parsed = maybeParseJs(value.slice(1), start + curIndex + 1, options);
       const usedVariables = {};
       const newValue = constructEvalFunction(parsed.code, parsed.map);
 
       options.generatedThisVar = options.generatedThisVar || parsed.generatedThisVar;
-      newValue.location = location;
+      newValue.location = start + curIndex + 1;
 
       _.forEach(parsed.vars, (variable) => {
         if (!exclude[variable]) {

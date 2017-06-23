@@ -3,6 +3,7 @@ const _ = require('lodash');
 const PURE_PROP_REGEX = /^[A-Za-z_$][A-Za-z\d_$]*$/;
 
 const setJsIndents = require('./setJsIndents');
+const stringifyString = require('./stringifyString');
 
 module.exports = function generateJson(json, code, indent, options) {
   const {
@@ -45,13 +46,13 @@ ${ INDENT.repeat(indent + 2)
     );
 
     if (typeof type === 'string') {
-      code.add(JSON.stringify(type));
+      code.add(stringifyString(type, options));
     } else {
       if (options.toFunction) {
         code.generatedVarsName = true;
         code.addWithMapping(
           options.varsVarName + '.',
-          options.lines.locationForIndex(type.start)
+          type.start
         );
       }
 
@@ -61,7 +62,7 @@ ${ INDENT.repeat(indent + 2)
         } else {
           code.addWithMapping(
             name,
-            options.lines.locationForIndex(type.start),
+            type.start,
             name
           );
         }
@@ -79,7 +80,7 @@ ${ INDENT.repeat(indent + 2)
         const value = args[arg];
 
         if (!PURE_PROP_REGEX.test(arg)) {
-          arg = JSON.stringify(arg);
+          arg = stringifyString(arg, options);
         }
 
         code.add(
@@ -88,16 +89,16 @@ ${ INDENT.repeat(indent + 3)
             }${ arg }: `
         );
 
-        if (typeof value === 'object' && arg === '__source') {
+        if (typeof value === 'object') {
           code.add(
             `{
-${ INDENT.repeat(indent + 4) }file: "${ value.file }",
+${ INDENT.repeat(indent + 4) }file: ${ stringifyString(value.file, options) },
 ${ INDENT.repeat(indent + 4) }line: ${ value.line },
 ${ INDENT.repeat(indent + 4) }column: ${ value.column }
 ${ INDENT.repeat(indent + 3) }}`
           );
-        } else if (typeof value !== 'function') {
-          code.add(JSON.stringify(value));
+        } else if (typeof value === 'string') {
+          code.add(stringifyString(value, options));
         } else {
           if (value.mixin) {
             code.generatedMixin = true;
@@ -119,7 +120,7 @@ ${ INDENT.repeat(indent + 3) }}`
               code.generatedVarsName = true;
               code.addWithMapping(
                 options.varsVarName + '.',
-                options.lines.locationForIndex(value.nameStart)
+                value.nameStart
               );
             }
 
@@ -129,7 +130,7 @@ ${ INDENT.repeat(indent + 3) }}`
               } else {
                 code.addWithMapping(
                   name,
-                  options.lines.locationForIndex(value.nameStart),
+                  value.nameStart,
                   name
                 );
               }
@@ -155,7 +156,7 @@ ${ INDENT.repeat(indent + 2) }}`
     if ('value' in node) {
       const value = node.value;
       const withIndents = setJsIndents(
-        typeof value === 'string' ? JSON.stringify(value) : value.toString(),
+        typeof value === 'string' ? stringifyString(value, options) : value.toString(),
         value.map,
         indent + 2,
         options

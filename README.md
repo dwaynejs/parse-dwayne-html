@@ -65,6 +65,8 @@ transformDwayneHtml(code: string, options?: {
   startColumn?: number = 0,
   filename?: string = 'unknown',
   indent?: string | number = 2,
+  useES6?: boolean = false,
+  quotes?: 'single' | 'double' = 'double',
   tmplVarName?: string = '_tmpl',
   mixinVarName?: string = '_mixin',
   thisVarName?: string,
@@ -145,13 +147,16 @@ the output rather than ES5: `let` instead of `var`, arrow functions
 instead of usual functions. It's recommended setting this option to
 `true` and leave transformations to babel. Also passed to
 [transform-dwayne-js-expressions](https://github.com/dwaynejs/transform-dwayne-js-expressions).
+* `options.quotes` (default: `'double'`): one of `['single', 'double']`.
+Type of quotes to use in the output. Note that it doesn't affect
+your JS embedded code.
 
 Returns an object with following properties:
 
 * `code`: the output js code.
 * `map`: the output sourcemap.
 * `generatedTmplVar`: whether `options.tmplVarName` was used in the
-codeor not. (useful for embedded code)
+code or not. (useful for embedded code)
 * `generatedMixinVar`: whether `options.mixinVarName` was used in the
 code or not. (useful for embedded code)
 * `generatedThisVar`: whether `options.thisVarName` was used in the
