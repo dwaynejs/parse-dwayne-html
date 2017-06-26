@@ -17,6 +17,9 @@ describe('transform', () => {
       let sourcemap = _.attempt(() => (
         require(root + '/sourcemap.json')
       ));
+      let code = _.attempt(() => (
+        fs.readFileSync(root + '/source.html', 'utf8')
+      ));
 
       if (_.isError(options)) {
         options = {};
@@ -29,7 +32,9 @@ describe('transform', () => {
         };
       }
 
-      const code = fs.readFileSync(root + '/source.html', 'utf8');
+      if (_.isError(code)) {
+        code = fs.readFileSync(root + '/source.js', 'utf8');
+      }
 
       options.filename = 'source.html';
       options.sourceContent = code;

@@ -64,6 +64,7 @@ transformDwayneHtml(code: string, options?: {
   startLine?: number = 1,
   startColumn?: number = 0,
   filename?: string = 'unknown',
+  jsxMode?: boolean = false,
   indent?: string | number = 2,
   useES6?: boolean = false,
   quotes?: 'single' | 'double' = 'double',
@@ -97,6 +98,8 @@ into javascript. Used when `options.addSource` is `true`. Note that it
 doesn't shift the output code or its map.
 * `options.filename` (default: `'unknown'`): used for sourcemaps and
 `__source` args (see `options.addSource`).
+* `options.jsxMode` (default: `false`): if the input should be treated
+as JSX and not HTML.
 * `options.tmplVarName` (default: `_tmpl`): used for referencing
 the template var. If the html is embedded into javascript it's
 important not to violate the outer scope, so you should pass a unique

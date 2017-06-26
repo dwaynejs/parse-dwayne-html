@@ -53,7 +53,7 @@ const COMMENT_START_REGEX = /<!--/;
 const COMMENT_END_REGEX = /-->|-?-?$/;
 const ATTR_REGEX = /([^\u0000-\u0020\s"'>/=]+)(?:(\s*=\s*)('[^']*'|"[^"]*"|[^\s"'>=]*))?\s*/;
 
-class Parser {
+class HtmlParser {
   constructor(html, options) {
     this.original = html;
     this.html = html;
@@ -183,10 +183,6 @@ class Parser {
       ? attrMatch[3].replace(/^["']|["']$/g, '')
       : true;
 
-    if (attrMatch[2]) {
-      this.currentNode.attrsValuesLocations[name] = this.index + name.length + attrMatch[2].length + /^['|"]/.test(attrMatch[3]);
-    }
-
     const attr = this.currentNode.attrs[name] = {
       nameStart: this.index,
       valueStart: null,
@@ -246,8 +242,6 @@ class Parser {
       start: this.index + 1,
       type: openTagMatch[1],
       attrs: {},
-      attrsNamesLocations: {},
-      attrsValuesLocations: Object.create(null),
       children: []
     };
 
@@ -294,4 +288,4 @@ class Parser {
   }
 }
 
-module.exports = Parser;
+module.exports = HtmlParser;

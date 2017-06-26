@@ -3,7 +3,8 @@ const { default: LinesAndColumns } = require('lines-and-columns');
 const { transform } = require('babel-core');
 const CodeGenerator = require('generate-code');
 
-const Parser = require('./Parser');
+const JsxParser = require('./JsxParser');
+const HtmlParser = require('./HtmlParser');
 const transformJs = require('./transformJs');
 const generateJson = require('./generateJson');
 const extractFirstScript = require('./extractFirstScript');
@@ -36,6 +37,7 @@ module.exports = (source, options) => {
   options.indent = _.get(options, 'indent', 2);
   options.useES6 = !!_.get(options, 'useES6', false);
   options.quotes = _.get(options, 'quotes', 'double');
+  options.jsxMode = !!_.get(options, 'jsxMode', false);
 
   options.sourceContent = source;
   options.lines = new LinesAndColumns(source);
@@ -73,6 +75,9 @@ module.exports = (source, options) => {
   }
 
   const usedLocals = {};
+  const Parser = options.jsxMode
+    ? JsxParser
+    : HtmlParser;
   const parsedHTML = new Parser(source, options).parse();
   const parsed = transformJs(
     traverseDom(parsedHTML),
