@@ -1,7 +1,7 @@
 # transform-dwayne-html
 
-The module is used for transforming plain html to javascript code (with
-sourcemaps) according to the needs of Dwayne.
+The module is used for transforming plain HTML and JSX to javascript
+code (with sourcemaps) according to the needs of Dwayne.
 
 It's supposed to be used in loaders, plugins for bundlers,
 build systems, task runners and etc.
@@ -26,19 +26,21 @@ const html = `
 console.log(transformDwayneHtml(html));
 
 // {
-//   code: `module.exports = [
+//   code: `var _tmpl;
+// 
+//   module.exports = (_tmpl = [
 //     {
-//       type: 'div',
+//       type: "div",
 //       children: [
 //         {
-//           type: '#text',
+//           type: "#text",
 //           value: function (_) {
-//             return _.value;
+//             return _.text;
 //           }
 //         }
 //       ]
 //     }
-//   ]`,
+//   ], _tmpl.vars = ["text"], _tmpl)`,
 //   map: { ... },
 //   generatedTmplVar: false,
 //   generatedMixinVar: false
@@ -76,7 +78,8 @@ transformDwayneHtml(code: string, options?: {
   code: string,
   map: SourceMap | null,
   generatedTmplVar: boolean,
-  generatedMixinVar: boolean
+  generatedMixinVar: boolean,
+  generatedThisVar: boolean
 }
 ```
 
@@ -150,6 +153,7 @@ the output rather than ES5: `let` instead of `var`, arrow functions
 instead of usual functions. It's recommended setting this option to
 `true` and leave transformations to babel. Also passed to
 [transform-dwayne-js-expressions](https://github.com/dwaynejs/transform-dwayne-js-expressions).
+See the examples below.
 * `options.quotes` (default: `'double'`): one of `['single', 'double']`.
 Type of quotes to use in the output. Note that it doesn't affect
 your JS embedded code.
@@ -343,6 +347,54 @@ module.exports = [
 ];
 ```
 
+#### `options.useES6`
+
+Input:
+
+```html
+<div>
+  {text}
+</div>
+```
+
+Output (`false`):
+
+```js
+var _tmpl;
+
+module.exports = (_tmpl = [
+  {
+    type: "div",
+    children: [
+      {
+        type: "#text",
+        value: function (_) {
+          return _.text;
+        }
+      }
+    ]
+  }
+], _tmpl.vars = ["text"], _tmpl);
+```
+
+Output (`true`):
+
+```js
+let _tmpl;
+
+module.exports = (_tmpl = [
+  {
+    type: "div",
+    children: [
+      {
+        type: "#text",
+        value: _ => _.text
+      }
+    ]
+  }
+], _tmpl.vars = ["text"], _tmpl);
+```
+
 ### Syntax rules and tips
 
 * All your template code is just a plain html.
@@ -363,6 +415,7 @@ Example: `MyBlock`, `nsp.block` will compile into pure js and `myBlock`,
 `options.injectFirstScript` or `options.toFunction`.
 * If the template contain a `Each` or a `Dwayne.Each` block, it
 excludes `item` and `index` variables inside them from used variables.
+* All rules for usual JSX are the same for Dwayne JSX.
 
 ### Output template
 
