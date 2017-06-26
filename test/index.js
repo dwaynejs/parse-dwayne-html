@@ -57,14 +57,18 @@ describe('transform', () => {
 
       done(new Error('Not thrown'));
     } catch (err) {
-      strictEqual(err.message, 'Unexpected token (2:7)');
-      strictEqual(err.pos, 13);
-      deepStrictEqual(err.loc, {
-        line: 2,
-        column: 7
-      });
+      try {
+        strictEqual(err.message, 'Unexpected token (2:7)');
+        strictEqual(err.pos, 13);
+        deepStrictEqual(err.loc, {
+          line: 2,
+          column: 7
+        });
 
-      done();
+        done();
+      } catch (err) {
+        done(err);
+      }
     }
   });
 
@@ -76,14 +80,18 @@ describe('transform', () => {
 
       done(new Error('Not thrown'));
     } catch (err) {
-      strictEqual(err.message, 'Unterminated string constant (2:7)');
-      strictEqual(err.pos, 13);
-      deepStrictEqual(err.loc, {
-        line: 2,
-        column: 7
-      });
+      try {
+        strictEqual(err.message, 'Unterminated string constant (2:7)');
+        strictEqual(err.pos, 13);
+        deepStrictEqual(err.loc, {
+          line: 2,
+          column: 7
+        });
 
-      done();
+        done();
+      } catch (err) {
+        done(err);
+      }
     }
   });
 
@@ -95,14 +103,18 @@ describe('transform', () => {
 
       done(new Error('Not thrown'));
     } catch (err) {
-      strictEqual(err.message, 'Unexpected token, expected , (2:9)');
-      strictEqual(err.pos, 15);
-      deepStrictEqual(err.loc, {
-        line: 2,
-        column: 9
-      });
+      try {
+        strictEqual(err.message, 'Unexpected token, expected , (2:9)');
+        strictEqual(err.pos, 15);
+        deepStrictEqual(err.loc, {
+          line: 2,
+          column: 9
+        });
 
-      done();
+        done();
+      } catch (err) {
+        done(err);
+      }
     }
   });
 
@@ -114,14 +126,18 @@ describe('transform', () => {
 
       done(new Error('Not thrown'));
     } catch (err) {
-      strictEqual(err.message, 'Unterminated embedded javascript expression (2:8)');
-      strictEqual(err.pos, 14);
-      deepStrictEqual(err.loc, {
-        line: 2,
-        column: 8
-      });
+      try {
+        strictEqual(err.message, 'Unterminated embedded javascript expression (2:8)');
+        strictEqual(err.pos, 14);
+        deepStrictEqual(err.loc, {
+          line: 2,
+          column: 8
+        });
 
-      done();
+        done();
+      } catch (err) {
+        done(err);
+      }
     }
   });
 
@@ -133,14 +149,18 @@ describe('transform', () => {
 
       done(new Error('Not thrown'));
     } catch (err) {
-      strictEqual(err.message, 'Unexpected token (2:19)');
-      strictEqual(err.pos, 25);
-      deepStrictEqual(err.loc, {
-        line: 2,
-        column: 19
-      });
+      try {
+        strictEqual(err.message, 'Unexpected token (2:19)');
+        strictEqual(err.pos, 25);
+        deepStrictEqual(err.loc, {
+          line: 2,
+          column: 19
+        });
 
-      done();
+        done();
+      } catch (err) {
+        done(err);
+      }
     }
   });
 
