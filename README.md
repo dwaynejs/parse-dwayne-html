@@ -65,6 +65,7 @@ transformDwayneHtml(code: string, options?: {
   inputSourceMap?: SourceMap | null,
   startLine?: number = 1,
   startColumn?: number = 0,
+  startPosition?: number = 0,
   filename?: string = 'unknown',
   jsxMode?: boolean = false,
   indent?: string | number = 2,
@@ -93,12 +94,16 @@ Plugins options:
 `['module', 'embed']`. `module` means that the output should be a
 module, and `embed` means that the output should be a plain template.
 * `options.inputSourceMap` (default: `null`): input sourcemap.
-* `options.startLine` (default: `1`): useful when the html is embedded
-into javascript. Used when `options.addSource` is `true`. Note that it
-doesn't shift the output code or its map. (1-indexed)
-* `options.startColumn` (default: `0`): useful when the html is embedded
-into javascript. Used when `options.addSource` is `true`. Note that it
-doesn't shift the output code or its map.
+* `options.startLine` (default: `1`): set this when the html is embedded
+into javascript. Used when `options.addSource` is `true` and for syntax
+error messages. Note that it doesn't shift the output code or its
+map. (1-indexed)
+* `options.startColumn` (default: `0`): set this when the html is embedded
+into javascript. Used when `options.addSource` is `true` and for syntax
+error messages. Note that it doesn't shift the output code or its map.
+* `options.startPosition` (default: `0`): set this when the html is embedded
+into javascript. Used when `options.addSource` is `true` and for syntax
+error messages. Note that it doesn't shift the output code or its map.
 * `options.filename` (default: `'unknown'`): used for sourcemaps and
 `__source` args (see `options.addSource`).
 * `options.jsxMode` (default: `false`): if the input should be treated

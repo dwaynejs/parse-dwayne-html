@@ -72,6 +72,27 @@ describe('transform', () => {
     }
   });
 
+  it('should throw an error in wrong text nodes js in first line', (done) => {
+    try {
+      transformDwayneHtml('<div>{a + *}</div>');
+
+      done(new Error('Not thrown'));
+    } catch (err) {
+      try {
+        strictEqual(err.message, 'Unexpected token (1:10)');
+        strictEqual(err.pos, 10);
+        deepStrictEqual(err.loc, {
+          line: 1,
+          column: 10
+        });
+
+        done();
+      } catch (err) {
+        done(err);
+      }
+    }
+  });
+
   it('should throw an error with unterminated string literal in text nodes js', (done) => {
     try {
       transformDwayneHtml(`<div>
@@ -109,6 +130,27 @@ describe('transform', () => {
         deepStrictEqual(err.loc, {
           line: 2,
           column: 9
+        });
+
+        done();
+      } catch (err) {
+        done(err);
+      }
+    }
+  });
+
+  it('should throw an error with unexpected end of input in text nodes js in first line', (done) => {
+    try {
+      transformDwayneHtml(`<div>{a + (1}</div>`);
+
+      done(new Error('Not thrown'));
+    } catch (err) {
+      try {
+        strictEqual(err.message, 'Unexpected token, expected , (1:12)');
+        strictEqual(err.pos, 12);
+        deepStrictEqual(err.loc, {
+          line: 1,
+          column: 12
         });
 
         done();

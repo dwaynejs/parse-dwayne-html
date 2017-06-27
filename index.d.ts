@@ -13,6 +13,7 @@ export interface Options {
   inputSourceMap?: SourceMap | null;
   startLine?: number;
   startColumn?: number;
+  startPosition?: number;
   filename?: string;
   jsxMode?: boolean;
   indent?: string | number;

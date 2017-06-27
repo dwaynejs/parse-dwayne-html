@@ -3,16 +3,7 @@ const { parseExpression } = require('babylon');
 const transformDwayneJs = require('transform-dwayne-js-expressions');
 
 exports.parseJs = (code, position, options) => {
-  try {
-    return transformDwayneJs(code, pickOptions(options));
-  } catch (err) {
-    /* istanbul ignore if */
-    if (typeof err.pos !== 'number') {
-      throw err;
-    }
-
-    throwError(err, position, options);
-  }
+  return transformDwayneJs(code, pickOptions(getOptions(options, position)));
 };
 
 exports.maybeParseJs = (code, position, options) => {
@@ -50,41 +41,48 @@ exports.maybeParseJs = (code, position, options) => {
 
     const newCode = code.slice(0, pos);
 
-    try {
-      const parsed = transformDwayneJs(newCode, pickOptions(options));
+    const parsed = transformDwayneJs(newCode, pickOptions(getOptions(options, position)));
 
-      return {
-        vars: parsed.vars,
-        generatedThisVar: parsed.generatedThisVar,
-        code: parsed.code,
-        map: parsed.map,
-        original: newCode,
-        rest: code.slice(pos + 1)
-      };
-    } catch (err) {
-      /* istanbul ignore if */
-      if (typeof err.pos !== 'number') {
-        throw err;
-      }
-
-      throwError(err, position, options);
-    }
+    return {
+      vars: parsed.vars,
+      generatedThisVar: parsed.generatedThisVar,
+      code: parsed.code,
+      map: parsed.map,
+      original: newCode,
+      rest: code.slice(pos + 1)
+    };
   }
 };
 
 function throwError(err, position, options) {
-  err.pos = position + err.pos;
+  const location = options.lines.locationForIndex(position + err.pos);
 
-  const location = options.lines.locationForIndex(err.pos);
-
-  location.line++;
-
-  err.loc = location;
+  err.pos = options.startPosition + position + err.pos;
+  err.loc = {
+    line: options.startLine + location.line,
+    column: location.line === 0
+      ? options.startColumn + location.column
+      : location.column
+  };
   err.message = err.message.replace(/\(\d+:\d+\)$/, () => (
-    `(${ location.line }:${ location.column })`
+    `(${ err.loc.line }:${ err.loc.column })`
   ));
 
   throw err;
+}
+
+function getOptions(options, position) {
+  options = _.assign({}, options);
+
+  const location = options.lines.locationForIndex(position);
+
+  options.startPosition += position;
+  options.startLine += location.line;
+  options.startColumn = location.line === 0
+    ? options.startColumn + location.column
+    : location.column;
+
+  return options;
 }
 
 function pickOptions(options) {
@@ -94,6 +92,9 @@ function pickOptions(options) {
     'sourceMap',
     'keepScope',
     'thisVarName',
-    'useES6'
+    'useES6',
+    'startLine',
+    'startColumn',
+    'startPosition'
   ]);
 }

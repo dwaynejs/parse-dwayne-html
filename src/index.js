@@ -33,6 +33,7 @@ module.exports = (source, options) => {
   options.inputSourceMap = _.get(options, 'inputSourceMap', null);
   options.startLine = _.get(options, 'startLine', 1);
   options.startColumn = _.get(options, 'startColumn', 0);
+  options.startPosition = _.get(options, 'startPosition', 0);
   options.filename = _.get(options, 'filename', 'unknown');
   options.indent = _.get(options, 'indent', 2);
   options.useES6 = !!_.get(options, 'useES6', false);
