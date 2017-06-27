@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const { default: LinesAndColumns } = require('lines-and-columns');
-const { transform } = require('babel-core');
 const CodeGenerator = require('generate-code');
 
 const JsxParser = require('./JsxParser');
@@ -87,7 +86,7 @@ module.exports = (source, options) => {
     options
   );
   const vars = _.keys(usedLocals);
-  const additionalJs = extractFirstScript(parsed);
+  const additionalJs = extractFirstScript(parsed, options);
 
   const code = new CodeGenerator(_.assign(pickOptions(options), {
     inputSourceMap: options.inputSourceMap
@@ -107,19 +106,10 @@ module.exports = (source, options) => {
     tmplCode.add('[]');
   }
 
-  if (options.sourceType === 'module' && options.injectFirstScript && additionalJs) {
-    const {
-      code: imports,
-      map: importsMap
-    } = transform(additionalJs.code, {
-      babelrc: false,
-      filename: options.filename,
-      sourceMaps: options.sourceMap
-    });
+  if (additionalJs) {
+    code.addWithMap(`${ additionalJs.code }
 
-    code.addWithMap(`${ imports }
-
-`, importsMap, additionalJs.loc);
+`, additionalJs.map, additionalJs.start);
   }
 
   if (options.sourceType === 'module') {

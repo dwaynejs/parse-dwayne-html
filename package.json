@@ -1,10 +1,10 @@
 {
   "name": "transform-dwayne-html",
-  "version": "5.7.0",
+  "version": "5.7.1",
   "main": "lib/index.js",
   "typings": "index.d.ts",
   "dependencies": {
-    "babel-core": "^6.25.0",
+    "babel-generator": "^6.25.0",
     "babel-types": "^6.25.0",
     "babylon": "^6.17.4",
     "entities": "^1.1.1",

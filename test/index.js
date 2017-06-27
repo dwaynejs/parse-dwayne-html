@@ -206,6 +206,29 @@ describe('transform', () => {
     }
   });
 
+  it('should throw an error with wrong first script code', (done) => {
+    try {
+      transformDwayneHtml(`<script>
+  const a = b + *;
+</script>`);
+
+      done(new Error('Not thrown'));
+    } catch (err) {
+      try {
+        strictEqual(err.message, 'Unexpected token (2:16)');
+        strictEqual(err.pos, 25);
+        deepStrictEqual(err.loc, {
+          line: 2,
+          column: 16
+        });
+
+        done();
+      } catch (err) {
+        done(err);
+      }
+    }
+  });
+
   it('should throw an error with wrong options.sourceType', () => {
     throws(() => {
       transformDwayneHtml('', { sourceType: 'unknown' });
