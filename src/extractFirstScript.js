@@ -26,6 +26,7 @@ module.exports = (tree, options) => {
   try {
     ast = parse(scriptCode, {
       sourceFilename: options.filename,
+      sourceType: 'module',
       plugins: [
         'jsx',
         'flow',
