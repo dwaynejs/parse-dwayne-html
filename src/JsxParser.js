@@ -8,39 +8,32 @@ class JsxParser {
 
     this.filename = options.filename;
     this.collapseWhitespace = options.collapseWhitespace;
+    this.restName = options.jsxRestName;
   }
 
   parse() {
-    try {
-      const jsxRootNode = parseExpression(this.source, {
-        sourceFilename: this.filename,
-        plugins: [
-          'jsx',
-          'flow',
-          'doExpressions',
-          'objectRestSpread',
-          'decorators',
-          'classProperties',
-          'classPrivateProperties',
-          'exportExtensions',
-          'asyncGenerators',
-          'functionBind',
-          'functionSent',
-          'dynamicImport',
-          'numericSeparator',
-          'optionalChaining',
-          'importMeta'
-        ]
-      });
+    const jsxRootNode = parseExpression(this.source, {
+      sourceFilename: this.filename,
+      plugins: [
+        'jsx',
+        'flow',
+        'doExpressions',
+        'objectRestSpread',
+        'decorators',
+        'classProperties',
+        'classPrivateProperties',
+        'exportExtensions',
+        'asyncGenerators',
+        'functionBind',
+        'functionSent',
+        'dynamicImport',
+        'numericSeparator',
+        'optionalChaining',
+        'importMeta'
+      ]
+    });
 
-      if (!t.isJSXElement(jsxRootNode)) {
-        return [];
-      }
-
-      return this.traverseNode(jsxRootNode, [], true, true);
-    } catch (err) {
-      return [];
-    }
+    return this.traverseNode(jsxRootNode, [], true, true);
   }
 
   traverseNode(node, dom, isFirst, isLast) {
@@ -61,6 +54,7 @@ class JsxParser {
         },
         children
       } = node;
+      let RestIndex = 0;
 
       elem = {
         start,
@@ -69,9 +63,15 @@ class JsxParser {
         children: []
       };
 
-      attributes
-        .filter(t.isJSXAttribute)
-        .forEach(({ name: { start, end }, value }) => {
+      attributes.forEach((attribute) => {
+        if (t.isJSXAttribute(attribute)) {
+          const {
+            name: {
+              start,
+              end
+            },
+            value
+          } = attribute;
           const attr = elem.attrs[this.source.slice(start, end)] = {
             nameStart: start,
             valueStart: null,
@@ -92,7 +92,19 @@ class JsxParser {
             attr.valueStart = start;
             attr.value = this.source.slice(start, end);
           }
-        });
+        } else {
+          const {
+            start,
+            end
+          } = attribute;
+
+          elem.attrs[`${ this.restName }:${ RestIndex++ }`] = {
+            nameStart: start,
+            valueStart: start - 1,
+            value: `{${ this.source.slice(start, end) }}`
+          };
+        }
+      });
 
       children.forEach((node, index) => {
         this.traverseNode(

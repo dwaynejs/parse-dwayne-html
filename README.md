@@ -68,6 +68,7 @@ transformDwayneHtml(code: string, options?: {
   startPosition?: number = 0,
   filename?: string = 'unknown',
   jsxMode?: boolean = false,
+  jsxRestName?: string = 'Rest',
   indent?: string | number = 2,
   useES6?: boolean = false,
   quotes?: 'single' | 'double' = 'double',
@@ -162,6 +163,8 @@ See the examples below.
 * `options.quotes` (default: `'double'`): one of `['single', 'double']`.
 Type of quotes to use in the output. Note that it doesn't affect
 your JS embedded code.
+* `options.jsxRestName` (default: `'Rest'`): name of the Rest mixin
+when transforming JSX spread attribute.
 
 Returns an object with following properties:
 
@@ -420,7 +423,8 @@ Example: `MyBlock`, `nsp.block` will compile into pure js and `myBlock`,
 `options.injectFirstScript` or `options.toFunction`.
 * If the template contain a `Each` or a `Dwayne.Each` block, it
 excludes `item` and `index` variables inside them from used variables.
-* All rules for usual JSX are the same for Dwayne JSX.
+* All rules for usual JSX are the same for Dwayne JSX. Only JSX spread
+attribute is transformed into `Rest` mixin from Dwayne.
 
 ### Output template
 

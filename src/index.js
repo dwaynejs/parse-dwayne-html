@@ -38,6 +38,7 @@ module.exports = (source, options) => {
   options.useES6 = !!_.get(options, 'useES6', false);
   options.quotes = _.get(options, 'quotes', 'double');
   options.jsxMode = !!_.get(options, 'jsxMode', false);
+  options.jsxRestName = _.get(options, 'jsxRestName', 'Rest');
 
   options.sourceContent = source;
   options.lines = new LinesAndColumns(source);

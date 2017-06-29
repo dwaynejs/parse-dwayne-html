@@ -26,6 +26,9 @@ module.exports = (_tmpl = [
           arg3: function (_) {
             return _.value;
           },
+          "Rest:0": (_mixin = function (_) {
+            return { ..._.rest1 };
+          }, _mixin.mixin = Rest, _mixin),
           bool: true,
           MixinBool: (_mixin = function () {
             return true;
@@ -36,6 +39,9 @@ module.exports = (_tmpl = [
           MixinDynamic: (_mixin = function (_) {
             return _.a + _.b;
           }, _mixin.mixin = MixinDynamic, _mixin),
+          "Rest:1": (_mixin = function (_) {
+            return { ..._.rest2 };
+          }, _mixin.mixin = Rest, _mixin),
           __source: {
             file: "source.html",
             line: 5,
@@ -45,4 +51,4 @@ module.exports = (_tmpl = [
       }
     ]
   }
-], _tmpl.vars = ["text", "value", "a", "b"], _tmpl);
+], _tmpl.vars = ["text", "value", "rest1", "a", "b", "rest2"], _tmpl);
