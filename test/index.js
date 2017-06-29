@@ -266,6 +266,12 @@ describe('transform', () => {
       transformDwayneHtml('', { quotes: 'triple' });
     }, /options\.quotes has to be either "single" or "double"!/);
   });
+
+  it('should throw an error with wrong options.mode', () => {
+    throws(() => {
+      transformDwayneHtml('', { mode: 'pug' });
+    }, /options\.mode has to be either "html" or "jsx"!/);
+  });
 });
 
 function compareMaps(probableMap, realMap, code) {

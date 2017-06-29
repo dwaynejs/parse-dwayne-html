@@ -14,6 +14,7 @@ const stringifyString = require('./stringifyString');
 const SOURCE_TYPES = ['module', 'embed'];
 const EXPORT_TYPES = ['es', 'cjs'];
 const QUOTE_TYPES = ['single', 'double'];
+const MODE_TYPES = ['html', 'jsx'];
 
 module.exports = (source, options) => {
   options = _.assign({}, options);
@@ -37,7 +38,7 @@ module.exports = (source, options) => {
   options.indent = _.get(options, 'indent', 2);
   options.useES6 = !!_.get(options, 'useES6', false);
   options.quotes = _.get(options, 'quotes', 'double');
-  options.jsxMode = !!_.get(options, 'jsxMode', false);
+  options.mode = _.get(options, 'mode', 'html');
   options.jsxRestName = _.get(options, 'jsxRestName', 'Rest');
 
   options.sourceContent = source;
@@ -71,12 +72,16 @@ module.exports = (source, options) => {
     throw new Error('options.quotes has to be either "single" or "double"!');
   }
 
+  if (MODE_TYPES.indexOf(options.mode) === -1) {
+    throw new Error('options.mode has to be either "html" or "jsx"!');
+  }
+
   if (!_.isArray(options.unscopables) || !options.unscopables.every(_.isString)) {
     throw new Error('options.unscopables has to be an array of strings!');
   }
 
   const usedLocals = {};
-  const Parser = options.jsxMode
+  const Parser = options.mode === 'jsx'
     ? JsxParser
     : HtmlParser;
   const parsedHTML = new Parser(source, options).parse();

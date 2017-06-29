@@ -67,7 +67,7 @@ transformDwayneHtml(code: string, options?: {
   startColumn?: number = 0,
   startPosition?: number = 0,
   filename?: string = 'unknown',
-  jsxMode?: boolean = false,
+  mode?: 'html' | 'jsx' = 'html',
   jsxRestName?: string = 'Rest',
   indent?: string | number = 2,
   useES6?: boolean = false,
@@ -107,8 +107,9 @@ into javascript. Used when `options.addSource` is `true` and for syntax
 error messages. Note that it doesn't shift the output code or its map.
 * `options.filename` (default: `'unknown'`): used for sourcemaps and
 `__source` args (see `options.addSource`).
-* `options.jsxMode` (default: `false`): if the input should be treated
-as JSX and not HTML.
+* `options.mode` (default: `'html'`): one of `['html', 'jsx']`. Type
+of the source code. It's planned to parse at least pug templates in
+the future.
 * `options.tmplVarName` (default: `_tmpl`): used for referencing
 the template var. If the html is embedded into javascript it's
 important not to violate the outer scope, so you should pass a unique
@@ -403,7 +404,7 @@ module.exports = (_tmpl = [
 ], _tmpl.vars = ["text"], _tmpl);
 ```
 
-#### `options.jsxMode`
+#### `options.mode`
 
 Input:
 
@@ -424,7 +425,7 @@ Input:
 </div>
 ```
 
-Output (`true`):
+Output (`'jsx'`):
 
 ```js
 var _tmpl, _mixin;

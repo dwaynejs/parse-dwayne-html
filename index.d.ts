@@ -15,7 +15,7 @@ export interface Options {
   startColumn?: number;
   startPosition?: number;
   filename?: string;
-  jsxMode?: boolean;
+  mode?: 'html' | 'jsx';
   jsxRestName?: string;
   indent?: string | number;
   useES6?: boolean;
