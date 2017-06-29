@@ -403,6 +403,77 @@ module.exports = (_tmpl = [
 ], _tmpl.vars = ["text"], _tmpl);
 ```
 
+#### `options.jsxMode`
+
+Input:
+
+```jsx
+<div>
+  {text}
+  <span>
+    {text}
+  </span>
+  <Block
+    arg1="string"
+    arg2="{stringWithCurly}"
+    bool
+    dynamic={value}
+    Mixin={value}
+    {...rest}
+  />
+</div>
+```
+
+Output (`true`):
+
+```js
+var _tmpl, _mixin;
+
+module.exports = (_tmpl = [
+  {
+    type: "div",
+    children: [
+      {
+        type: "#text",
+        value: function (_) {
+          return _.text;
+        }
+      },
+      {
+        type: "span",
+        children: [
+          {
+            type: "#text",
+            value: function (_) {
+              return _.text;
+            }
+          }
+        ]
+      },
+      {
+        type: Block,
+        args: {
+          arg1: "string",
+          arg2: function () {
+            return "{stringWithCurly}";
+          },
+          bool: true,
+          dynamic: function (_) {
+            return _.value;
+          },
+          Mixin: (_mixin = function (_) {
+            return _.value;
+          }, _mixin.mixin = Mixin, _mixin),
+          "Rest:0": (_mixin = function (_) {
+            return { ..._.rest };
+          }, _mixin.mixin = Rest, _mixin)
+        }
+      }
+    ]
+  }
+], _tmpl.vars = ["text", "value", "rest"], _tmpl);
+```
+
 ### Syntax rules and tips
 
 * All your template code is just a plain html.

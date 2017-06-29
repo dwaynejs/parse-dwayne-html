@@ -22,7 +22,9 @@ module.exports = (_tmpl = [
         type: Namespace.Block,
         args: {
           arg1: "string",
-          arg2: "string",
+          arg2: function () {
+            return "{string}";
+          },
           arg3: function (_) {
             return _.value;
           },

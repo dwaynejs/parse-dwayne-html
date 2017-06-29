@@ -1,6 +1,6 @@
 {
   "name": "transform-dwayne-html",
-  "version": "5.8.0",
+  "version": "5.8.1",
   "main": "lib/index.js",
   "typings": "index.d.ts",
   "dependencies": {

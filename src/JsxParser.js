@@ -2,10 +2,13 @@ const _ = require('lodash');
 const { parseExpression } = require('babylon');
 const t = require('babel-types');
 
+const stringifyString = require('./stringifyString');
+
 class JsxParser {
   constructor(source, options) {
     this.source = source;
 
+    this.options = options;
     this.filename = options.filename;
     this.collapseWhitespace = options.collapseWhitespace;
     this.restName = options.jsxRestName;
@@ -79,18 +82,24 @@ class JsxParser {
           };
 
           if (value) {
-            let {
+            const {
               start,
-              end
+              end,
+              value: attrValue
             } = value;
 
             if (t.isStringLiteral(value)) {
-              start++;
-              end--;
+              if (attrValue[0] === '{' && attrValue[attrValue.length - 1] === '}') {
+                attr.valueStart = start;
+                attr.value = `{${ stringifyString(attrValue, this.options) }}`;
+              } else {
+                attr.valueStart = start + 1;
+                attr.value = attrValue;
+              }
+            } else {
+              attr.valueStart = start;
+              attr.value = this.source.slice(start, end);
             }
-
-            attr.valueStart = start;
-            attr.value = this.source.slice(start, end);
           }
         } else {
           const {
