@@ -30,20 +30,20 @@ module.exports = (_tmpl = [
           },
           "Rest:0": (_mixin = function (_) {
             return { ..._.rest1 };
-          }, _mixin.mixin = Rest, _mixin),
+          }, _mixin.mixin = Rest, _mixin.__source = "source.html:9:4", _mixin),
           bool: true,
           MixinBool: (_mixin = function () {
             return true;
-          }, _mixin.mixin = MixinBool, _mixin),
+          }, _mixin.mixin = MixinBool, _mixin.__source = "source.html:11:4", _mixin),
           MixinString: (_mixin = function () {
             return "string";
-          }, _mixin.mixin = MixinString, _mixin),
+          }, _mixin.mixin = MixinString, _mixin.__source = "source.html:12:4", _mixin),
           MixinDynamic: (_mixin = function (_) {
             return _.a + _.b;
-          }, _mixin.mixin = MixinDynamic, _mixin),
+          }, _mixin.mixin = MixinDynamic, _mixin.__source = "source.html:13:4", _mixin),
           "Rest:1": (_mixin = function (_) {
             return { ..._.rest2 };
-          }, _mixin.mixin = Rest, _mixin),
+          }, _mixin.mixin = Rest, _mixin.__source = "source.html:14:4", _mixin),
           __source: "source.html:5:3"
         }
       }

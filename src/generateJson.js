@@ -111,6 +111,12 @@ ${ INDENT.repeat(indent + 3)
               }
             });
 
+            if (value.source) {
+              code.add(
+                `, ${ mixinVarName }.__source = ${ stringifyString(value.source, options) }`
+              );
+            }
+
             code.add(
               `, ${ mixinVarName })`
             );

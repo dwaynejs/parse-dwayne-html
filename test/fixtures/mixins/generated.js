@@ -9,13 +9,13 @@ module.exports = (_tmpl = [
         args: {
           "On:click": (_mixin = function (_) {
             return _.action();
-          }, _mixin.mixin = On, _mixin),
+          }, _mixin.mixin = On, _mixin.__source = "source.html:3:4", _mixin),
           Class: (_mixin = function (_) {
             return _.cls;
-          }, _mixin.mixin = Class, _mixin),
+          }, _mixin.mixin = Class, _mixin.__source = "source.html:4:4", _mixin),
           BoolMixin: (_mixin = function () {
             return true;
-          }, _mixin.mixin = BoolMixin, _mixin),
+          }, _mixin.mixin = BoolMixin, _mixin.__source = "source.html:5:4", _mixin),
           __source: "source.html:2:3"
         }
       }

@@ -22,10 +22,10 @@ module.exports = function (_) {
               args: {
                 "Dwayne.Class": (_mixin = function (_) {
                   return _.cls;
-                }, _mixin.mixin = _.Dwayne.Class, _mixin),
+                }, _mixin.mixin = _.Dwayne.Class, _mixin.__source = "source.html:4:6", _mixin),
                 MyMixin: (_mixin = function (_) {
                   return _.value;
-                }, _mixin.mixin = _.MyMixin, _mixin)
+                }, _mixin.mixin = _.MyMixin, _mixin.__source = "source.html:5:6", _mixin)
               }
             }
           ]

@@ -9,7 +9,7 @@ module.exports = (_tmpl = [
         args: {
           StringMixin: (_mixin = function () {
             return 'value';
-          }, _mixin.mixin = StringMixin, _mixin),
+          }, _mixin.mixin = StringMixin, _mixin.__source = 'source.html:2:9', _mixin),
           __source: 'source.html:2:3'
         },
         children: [

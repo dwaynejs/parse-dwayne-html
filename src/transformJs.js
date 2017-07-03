@@ -76,6 +76,10 @@ module.exports = function transformJs(DOM, usedLocals, exclude, options) {
 
           if (mixinMatch) {
             eventualValue.mixin = mixinMatch[1];
+
+            if (options.addSource) {
+              eventualValue.source = getSource(nameStart, options);
+            }
           }
 
           eventualValue.nameStart = nameStart;
@@ -87,15 +91,7 @@ module.exports = function transformJs(DOM, usedLocals, exclude, options) {
     }
 
     if (blockMatch && options.addSource) {
-      const location = options.lines.locationForIndex(start);
-
-      location.column += location.line === 0
-        ? options.startColumn
-        : 0;
-      location.line += options.startLine - 1;
-
-      node.args = node.args || {};
-      node.args.__source = `${ options.filename }:${ location.line + 1 }:${ location.column }`;
+      (node.args = node.args || {}).__source = getSource(start, options);
     }
 
     if (type !== '#text') {
@@ -171,3 +167,14 @@ module.exports = function transformJs(DOM, usedLocals, exclude, options) {
 
   return newDOM;
 };
+
+function getSource(position, options) {
+  const location = options.lines.locationForIndex(position);
+
+  location.column += location.line === 0
+    ? options.startColumn
+    : 0;
+  location.line += options.startLine - 1;
+
+  return `${ options.filename }:${ location.line + 1 }:${ location.column }`;
+}

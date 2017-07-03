@@ -148,8 +148,9 @@ Used only when `options.sourceType` is `module`. If it is `es`, the
 output will be exported like `export default ...;` and if `cjs`, it
 will be `module.exports = ...;`.
 * `options.addSource` (default: `true`): means that every block
-gets `__source` arg, which will be used later by Dwayne for debugging
-purposes (see the examples below).
+gets `__source` arg and every mixin gets `__source` property, which
+will be used later by Dwayne for debugging purposes (see the
+examples below).
 * `options.sourceMap` (default: `true`): whether the sourcemap should
 be generated (also passed to
 [transform-dwayne-js-expressions](https://github.com/dwaynejs/transform-dwayne-js-expressions)).
@@ -314,7 +315,7 @@ module.exports = function (_) {
 Input:
 
 ```html
-<div>
+<div Class="{classes}">
   <Block/>
 </div>
 ```
@@ -322,24 +323,38 @@ Input:
 Output (`false`):
 
 ```js
-module.exports = [
+var _tmpl, _mixin;
+
+module.exports = (_tmpl = [
   {
     type: "div",
+    args: {
+      Class: (_mixin = function (_) {
+        return _.classes;
+      }, _mixin.mixin = Class, _mixin)
+    },
     children: [
       {
         type: Block
       }
     ]
   }
-];
+], _tmpl.vars = ["classes"], _tmpl);
 ```
 
 Output (`true`):
 
 ```js
-module.exports = [
+var _tmpl, _mixin;
+
+module.exports = (_tmpl = [
   {
     type: "div",
+    args: {
+      Class: (_mixin = function (_) {
+        return _.classes;
+      }, _mixin.mixin = Class, _mixin.__source = "template.html:1:5", _mixin)
+    },
     children: [
       {
         type: Block,
@@ -349,7 +364,7 @@ module.exports = [
       }
     ]
   }
-];
+], _tmpl.vars = ["classes"], _tmpl);
 ```
 
 #### `options.useES6`
