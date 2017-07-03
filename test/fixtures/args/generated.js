@@ -14,11 +14,7 @@ module.exports = (_tmpl = [
             return _.val2;
           },
           c: true,
-          __source: {
-            file: "source.html",
-            line: 2,
-            column: 3
-          }
+          __source: "source.html:2:3"
         }
       }
     ]

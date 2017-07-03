@@ -10,11 +10,7 @@ module.exports = (_tmpl = [
           StringMixin: (_mixin = function () {
             return 'value';
           }, _mixin.mixin = StringMixin, _mixin),
-          __source: {
-            file: 'source.html',
-            line: 2,
-            column: 3
-          }
+          __source: 'source.html:2:3'
         },
         children: [
           {

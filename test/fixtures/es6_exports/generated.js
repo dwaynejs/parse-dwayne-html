@@ -5,11 +5,7 @@ export default [
       {
         type: Block,
         args: {
-          __source: {
-            file: "source.html",
-            line: 2,
-            column: 3
-          }
+          __source: "source.html:2:3"
         }
       }
     ]

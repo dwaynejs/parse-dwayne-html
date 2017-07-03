@@ -20,23 +20,6 @@ module.exports = function generateJson(json, code, indent, options) {
       children
     } = node;
 
-    if (options.addSource && typeof type !== 'string') {
-      args = args || {};
-
-      const location = options.lines.locationForIndex(type.start);
-
-      location.column += location.line === 0
-        ? options.startColumn
-        : 0;
-      location.line += options.startLine - 1;
-
-      args.__source = {
-        file: options.filename,
-        line: location.line + 1,
-        column: location.column
-      };
-    }
-
     code.add(
       `
 ${ INDENT.repeat(indent + 1)
@@ -89,15 +72,7 @@ ${ INDENT.repeat(indent + 3)
             }${ arg }: `
         );
 
-        if (typeof value === 'object') {
-          code.add(
-            `{
-${ INDENT.repeat(indent + 4) }file: ${ stringifyString(value.file, options) },
-${ INDENT.repeat(indent + 4) }line: ${ value.line },
-${ INDENT.repeat(indent + 4) }column: ${ value.column }
-${ INDENT.repeat(indent + 3) }}`
-          );
-        } else if (typeof value === 'string') {
+        if (typeof value !== 'function') {
           code.add(stringifyString(value, options));
         } else {
           if (value.mixin) {

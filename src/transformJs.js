@@ -86,6 +86,18 @@ module.exports = function transformJs(DOM, usedLocals, exclude, options) {
       });
     }
 
+    if (blockMatch && options.addSource) {
+      const location = options.lines.locationForIndex(start);
+
+      location.column += location.line === 0
+        ? options.startColumn
+        : 0;
+      location.line += options.startLine - 1;
+
+      node.args = node.args || {};
+      node.args.__source = `${ options.filename }:${ location.line + 1 }:${ location.column }`;
+    }
+
     if (type !== '#text') {
       if (
         children

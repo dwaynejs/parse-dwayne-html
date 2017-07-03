@@ -10,11 +10,7 @@ module.exports = [
           Class: (_mixin = function () {
             return "cls";
           }, _mixin.mixin = Class, _mixin),
-          __source: {
-            file: "source.html",
-            line: 2,
-            column: 3
-          }
+          __source: "source.html:2:3"
         }
       }
     ]

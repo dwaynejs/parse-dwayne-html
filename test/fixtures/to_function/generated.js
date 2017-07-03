@@ -5,11 +5,7 @@ module.exports = function (_) {
     {
       type: _.Block,
       args: {
-        __source: {
-          file: "source.html",
-          line: 1,
-          column: 1
-        }
+        __source: "source.html:1:1"
       },
       children: [
         {
@@ -18,11 +14,7 @@ module.exports = function (_) {
             if: function (_) {
               return _.value;
             },
-            __source: {
-              file: "source.html",
-              line: 2,
-              column: 3
-            }
+            __source: "source.html:2:3"
           },
           children: [
             {

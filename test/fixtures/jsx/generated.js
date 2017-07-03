@@ -44,11 +44,7 @@ module.exports = (_tmpl = [
           "Rest:1": (_mixin = function (_) {
             return { ..._.rest2 };
           }, _mixin.mixin = Rest, _mixin),
-          __source: {
-            file: "source.html",
-            line: 5,
-            column: 3
-          }
+          __source: "source.html:5:3"
         }
       }
     ]

@@ -344,11 +344,7 @@ module.exports = [
       {
         type: Block,
         args: {
-          __source: {
-            file: "template.html",
-            line: 2,
-            column: 3
-          }
+          __source: "template.html:2:3"
         }
       }
     ]
