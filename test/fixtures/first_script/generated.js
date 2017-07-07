@@ -7,7 +7,7 @@ module.exports = [
       {
         type: Block,
         args: {
-          __source: "source.html:6:3"
+          __source: "source.html:6:4"
         }
       }
     ]

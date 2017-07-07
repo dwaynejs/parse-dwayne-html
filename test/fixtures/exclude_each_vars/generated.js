@@ -6,7 +6,7 @@ module.exports = [
         type: Each,
         args: {
           item: "item",
-          __source: "source.html:2:3"
+          __source: "source.html:2:4"
         },
         children: [
           {

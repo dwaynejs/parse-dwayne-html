@@ -353,13 +353,13 @@ module.exports = (_tmpl = [
     args: {
       Class: (_mixin = function (_) {
         return _.classes;
-      }, _mixin.mixin = Class, _mixin.__source = "template.html:1:5", _mixin)
+      }, _mixin.mixin = Class, _mixin.__source = "template.html:1:6", _mixin)
     },
     children: [
       {
         type: Block,
         args: {
-          __source: "template.html:2:3"
+          __source: "template.html:2:4"
         }
       }
     ]

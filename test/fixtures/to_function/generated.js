@@ -5,7 +5,7 @@ module.exports = function (_) {
     {
       type: _.Block,
       args: {
-        __source: "source.html:1:1"
+        __source: "source.html:1:2"
       },
       children: [
         {
@@ -14,7 +14,7 @@ module.exports = function (_) {
             if: function (_) {
               return _.value;
             },
-            __source: "source.html:2:3"
+            __source: "source.html:2:4"
           },
           children: [
             {
@@ -22,10 +22,10 @@ module.exports = function (_) {
               args: {
                 "Dwayne.Class": (_mixin = function (_) {
                   return _.cls;
-                }, _mixin.mixin = _.Dwayne.Class, _mixin.__source = "source.html:4:6", _mixin),
+                }, _mixin.mixin = _.Dwayne.Class, _mixin.__source = "source.html:4:7", _mixin),
                 MyMixin: (_mixin = function (_) {
                   return _.value;
-                }, _mixin.mixin = _.MyMixin, _mixin.__source = "source.html:5:6", _mixin)
+                }, _mixin.mixin = _.MyMixin, _mixin.__source = "source.html:5:7", _mixin)
               }
             }
           ]

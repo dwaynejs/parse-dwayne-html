@@ -5,7 +5,7 @@ export default [
       {
         type: Block,
         args: {
-          __source: "source.html:2:3"
+          __source: "source.html:2:4"
         }
       }
     ]

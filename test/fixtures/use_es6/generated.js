@@ -7,7 +7,7 @@ module.exports = _ => (_tmpl = [
       {
         type: _.Block,
         args: {
-          __source: "source.html:2:3"
+          __source: "source.html:2:4"
         },
         children: [
           {

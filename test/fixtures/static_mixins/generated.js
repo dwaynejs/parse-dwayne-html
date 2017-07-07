@@ -9,8 +9,8 @@ module.exports = [
         args: {
           Class: (_mixin = function () {
             return "cls";
-          }, _mixin.mixin = Class, _mixin.__source = "source.html:3:4", _mixin),
-          __source: "source.html:2:3"
+          }, _mixin.mixin = Class, _mixin.__source = "source.html:3:5", _mixin),
+          __source: "source.html:2:4"
         }
       }
     ]

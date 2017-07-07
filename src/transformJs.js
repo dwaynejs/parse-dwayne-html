@@ -176,5 +176,5 @@ function getSource(position, options) {
     : 0;
   location.line += options.startLine - 1;
 
-  return `${ options.filename }:${ location.line + 1 }:${ location.column }`;
+  return `${ options.filename }:${ location.line + 1 }:${ location.column + 1 }`;
 }
